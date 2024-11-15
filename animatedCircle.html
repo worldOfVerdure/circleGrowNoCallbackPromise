@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Circle</title>
+
+    <style>
+      html {
+        font-size: 62.5%;
+      }
+
+      body {
+        font-size: 2.6rem;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      main, #inputs {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      main {
+        position: relative;
+        flex-direction: column;
+        gap: 1rem;
+        border: 1px solid #000;
+        width: fit-content;
+        margin: 1rem 0 0 1.5rem;
+        padding: 1rem;
+        z-index: 1;
+        background-color: peachpuff;
+        box-shadow: .4rem .4rem 1.2rem #000;
+      }
+
+      #inputs {
+        gap: 2rem;
+      }
+
+      input {
+        font-size: 1.8rem;
+      }
+
+      #circleGenerator {
+        width: fit-content;
+        border-radius: .8rem;
+      }
+
+      #circleGenerator:hover {
+        cursor: pointer;
+      }
+
+      #circleGenerator {
+        padding: 2rem;
+        font-size: 1.8rem;
+      }
+
+      #circle {
+        border-radius: 50%;
+        background-color: tomato;
+        transform: translateX(-50%) translateY(-50%);
+        transition-property: width, height;
+        transition-duration: 2s;
+        position: fixed;
+        box-shadow: .4rem .4rem 1.2rem #000;
+      }
+    </style>
+
+  </head>
+  <body>
+    <main>
+      <div id="inputs">
+        <label for="cx">cx: </label>
+        <input id="cx" type="number" value="150" oninput="editBtntext()" />
+
+        <label for="cy">cy: </label>
+        <input id="cy" type="number" value="150" oninput="editBtntext()" />
+
+        <label for="r">r: </label>
+        <input id="r" type="number" value="100" min="0" oninput="editBtntext()" />
+      </div>
+
+      <button id="circleGenerator" type="button" onclick="growCircle()">
+        Generate Circle: cx = 150, cy = 150, r = 100
+      </button>
+    </main>
+
+    <script>
+      function growCircle() {
+        if(document.getElementById("circle"))
+          document.body.removeChild(document.getElementById("circle"));
+      
+        const circle = document.createElement("div");
+        circle.setAttribute("id", "circle");
+
+        const inputValues = [
+          document.getElementById("cx").value,
+          document.getElementById("cy").value,
+          document.getElementById("r").value
+        ];
+        circle.style.left = inputValues[0] + "px";
+        circle.style.top = inputValues[1] + "px";
+        circle.style.width = circle.style.height = "0";
+
+        document.body.append(circle);
+
+        setTimeout(() => {
+          circle.style.width = inputValues[2] + "px";
+          circle.style.height = inputValues[2] + "px";
+        }, 0);
+      }
+
+      function editBtntext() {
+        const inputs = document.getElementsByTagName("input");
+        const btn = document.getElementById("circleGenerator");
+        const text = `Generate Circle: cx = ${inputs[0].value}, cy = ${inputs[1].value}, r = ${inputs[2].value}`;
+        btn.innerText = text;
+      }
+    </script>
+  </body>
+</html>
+
+
+<!-- Create a function showCircle(cx, cy, radius) that shows an animated growing circle.
+
+cx,cy are window-relative coordinates of the center of the circle,
+radius is the radius of the circle.
+Click the button below to see how it should look like: -->
